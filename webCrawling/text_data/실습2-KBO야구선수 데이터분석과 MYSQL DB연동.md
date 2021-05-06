@@ -200,21 +200,19 @@ lesson-learned:
 requests의 get으로 반복적으로 선수 상세페이지의 URL을 조회하려면,URL이 최소한으로 변경되도되는 pattern을 찾아야한다. (e.g., 이번경우에는 새로운 선수이든, 기존 선수이든, 선수 position 상관없이 player-id만 URL에서 바꿔주면 상세페이지 조회가 가능했다.)
 
 #### for cleaner and more efficient code:
-    * zip: 옷에 달린 zipper를 생각해보면 이해하기 쉽다. Take two(or more) arrays and combine each element at a time to make an array of tuples. 만약 combine하려는 array들 길이가 다르다면, 가장 짧은 array의 element 갯수만큼 zip된다. (실제 zipper처럼)
+   **zip:** 옷에 달린 zipper를 생각해보면 이해하기 쉽다. Take two(or more) arrays and combine each element at a time to make an array of tuples. 만약 combine하려는 array들 길이가 다르다면, 가장 짧은 array의 element 갯수만큼 zip된다. (실제 zipper처럼)
     
-    * enumerate: enumerate(iterable, start index=n) iterable object를 (index, iterable)로 구성된 (enumerated obj)리스트와같은 형태로 반환해준다. start index는 optional(default가 0이다) for-loop과 counter를 따로 만들지 않도고 iterable안에 component하나씩 access할 수 있다.
+   **enumerate:** enumerate(iterable, start index=n) iterable object를 (index, iterable)로 구성된 (enumerated obj)리스트와같은 형태로 반환해준다. start index는 optional(default가 0이다) for-loop과 counter를 따로 만들지 않도고 iterable안에 component하나씩 access할 수 있다.
     
-    * extend vs.append: 이번경우와 같이 순차적으로 여러 페이지를 조회래서  각 페이지에서 수집한 데이터를 하나의 리스트에 더하려면, extend를 사용할 수 있다. 
+   **extend vs.append:** 이번경우와 같이 순차적으로 여러 페이지를 조회래서  각 페이지에서 수집한 데이터를 하나의 리스트에 더하려면, extend를 사용할 수 있다. 
     
     - append를 사용하면 a=[1,2,3,4]를 리스트(b=[a,b,c])의 마지막에 한개의 원소로 더하지만(b=[a,b,c,[1,2,3,4]]) 
     
     - extend를 사용해서 a를 b에 더하면 a의 각각의 원소가 b에 더해진다. 결과는 b=[a,b,c,1,2,3,4]이다. 
     
-    * with open() & lazy evaluation: open()은 파일을 access하기위해 파일을 여는 함수이다. 그냥 바로 open()을 사용하는 것 보다, with keyword와 함께 사용하면 더 좋은 syntax와 exceptions 처리가 가능하다고 한다. 그리고 파일을 자동으로 닫아주기 때문에 close()를 따로 호출하지 않아도 된다. with를 사용하면 lazy evaluation 방식을 사용하는 것인데 (lazy evluation은 미리 evaluate하지 않고 value가 필요할때에 evaluate하는 방식임), 파일의 전체를 한꺼번에 가져오는 것이 아니라, 부분적을 가져오는것이라서 대용량의 파일을 가져와야 할때 매우 유용한다.
+   **with open() & lazy evaluation:** open()은 파일을 access하기위해 파일을 여는 함수이다. 그냥 바로 open()을 사용하는 것 보다, with keyword와 함께 사용하면 더 좋은 syntax와 exceptions 처리가 가능하다고 한다. 그리고 파일을 자동으로 닫아주기 때문에 close()를 따로 호출하지 않아도 된다. with를 사용하면 lazy evaluation 방식을 사용하는 것인데 (lazy evluation은 미리 evaluate하지 않고 value가 필요할때에 evaluate하는 방식임), 파일의 전체를 한꺼번에 가져오는 것이 아니라, 부분적을 가져오는것이라서 대용량의 파일을 가져와야 할때 매우 유용한다.
     
-    참고 link:
-    
-    https://towardsdatascience.com/what-is-lazy-evaluation-in-python-9efb1d3bfed0
+   참고 link: https://towardsdatascience.com/what-is-lazy-evaluation-in-python-9efb1d3bfed0
 
 
 ```python

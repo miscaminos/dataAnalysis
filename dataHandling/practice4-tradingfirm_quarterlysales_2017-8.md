@@ -456,7 +456,7 @@ plt.title('18년 6월 운용사 판매현황')
 
 
     
-![png](output_19_1.png)
+![png](practice4_1.png)
     
 
 
@@ -560,7 +560,7 @@ with plt.style.context('ggplot'):
 
 
     
-![png](output_23_0.png)
+![png](practice4_2.png)
     
 
 
@@ -1447,6 +1447,6 @@ combined.T.plot()
 
 
     
-![png](output_37_1.png)
+![png](practice4_3.png)
     
 

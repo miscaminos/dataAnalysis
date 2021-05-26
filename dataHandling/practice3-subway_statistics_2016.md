@@ -165,7 +165,7 @@ b.set_ylabel('승하차 인원')
 
 
     
-![png](output_19_1.png)
+![png](practice3_1.png)
     
 
 
@@ -231,7 +231,7 @@ plt.show()
 
 
     
-![png](output_26_0.png)
+![png](practice3_2.png)
     
 
 
@@ -264,7 +264,7 @@ ax2.legend(())
 
 
     
-![png](output_27_1.png)
+![png](practice3_3.png)
     
 
 
@@ -297,12 +297,12 @@ df5 = pd.concat(annual3, ignore_index=True)
 ```python
 df6 = df5.groupby('역명', as_index=False)[['인원']].sum()
 df6 = df6.sort_values(by=['인원'])
-df7 = df6.tail(20)
+df7 = df6.tail(10)
 ```
 
 
 ```python
-plt.figure(figsize=(10,15))
+plt.figure(figsize=(8,8))
 plt.barh(df7['역명'],df7['인원'])
 plt.title('2016년 역별 승하차 인원')
 plt.ylabel('역명')
@@ -312,7 +312,7 @@ plt.show()
 
 
     
-![png](output_32_0.png)
+![png](practice3_4.png)
     
 
 

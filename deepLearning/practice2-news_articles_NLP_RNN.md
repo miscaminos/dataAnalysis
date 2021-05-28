@@ -1,6 +1,6 @@
 ## 실습
 
-네이버 경제 뉴스 데이터 수집 후, 뉴스기사 텍스트를 말뭉치로 활용하여 KoNLPy 라이브러리 도구들을 통해 형태소 분석 및 cosine 유사도 기반의 유사단어 분석을 실행해보았다.
+네이버 경제 뉴스 데이터 수집 후, 뉴스기사 텍스트를 말뭉치로 활용하여 KoNLPy 라이브러리 도구들을 통해 말뭉치(corpus)를 분석해서 형태소 분석 및 유사한 단어를 찾아볼 수있다. 
 
 ### 1. naver경제 뉴스 수집 
 
@@ -156,13 +156,21 @@ for roots, dirs, files in os.walk("./economy_20210526"):
 len(total)
 ```
 
+### genism이란?
+
+genism: open source python library for natural language processing
+
+genism을 활용해서 특정 corpus (말뭉치)로 word2vec model을 훈련시키고 word embedding을 만들 수 있다.
+
+genism introduction: https://towardsdatascience.com/a-beginners-guide-to-word-embedding-with-gensim-word2vec-model-5970fa56cc92
+
 ### 특정 명사 단어와 연관 단어 찾기
 
-Word2Vec을 사용하명 단어를 백터화 할때 단ㄴ어의 문맥적 의미를 보존한다. 
-Word2Vec으로 임베딩한 명사 단어 vector와 cosine유사도가 가장 높은 단어를 확인할 수 있다.
-
+Word2Vec 모델을 사용하면 단어를 백터화 할때 단어의 문맥적 의미를 보존할 수 있다.
 Word2Vec은 분포가정 (distributional hypothesis)를 확인하는데에 사용된다.
 문장에서 어떤 단어가 같이 쓰였는지를 구별해서 결국 단어의 의미를 해성할때에 주변 문맥을 통해서 유추해 보는 것이다.
+
+Word2Vec으로 임베딩한 명사 단어 vector와 cosine유사도가 가장 높은 단어를 확인할 수 있다.
 
 word2vec활용 실험내용을 정리한 블로그:
 https://ratsgo.github.io/natural%20language%20processing/2017/03/08/word2vec/

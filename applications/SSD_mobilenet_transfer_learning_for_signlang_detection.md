@@ -11,13 +11,13 @@
     Therefore, by utilizing multiple layers which are of relatively lower input resolution, and using those to generate predictions at different scales, it can provide high accuracy results with faster detection speeds. 
 
     two major shortcomings of SSD:
-1. lower accuracy in detecting small objects (need data augmentation)
-2. need improvements in inference time
+    1. lower accuracy in detecting small objects (need data augmentation)
+    2. need improvements in inference time
 
 #### MobileNet
     a CNN architecture for imae classification and mobile vision - require less computational power to be able to run mobile devices, embedded systems, computers without GPUs, or web browsers
 
-# 0. Label images and split into train & test data sets
+## 0. Label images and split into train & test data sets
 
 test 및 train data set으로 활용할 수어 구현 이미지를 확보한 후, labelImg를 활용하여 각 수어 이미지를 구별할 수 있는 수어단어를 label한다.
 (labelImg 활용 방법 참고: 
@@ -210,7 +210,7 @@ for n in range(len(word_list)):
             shutil.move(b_xml, a_xml)
 ```
 
-# 1. Setup Paths
+## 1. Setup Paths
 
 pretrained model을 불러와서 위과정을 통해 만든 데이터를 input으로 transfer learning을 수행하기위해 먼저 directory 경로를 정의한다.
 
@@ -232,7 +232,7 @@ CHECKPOINT_PATH = MODEL_PATH+'/'+CUSTOM_MODEL_NAME
 CONFIG_PATH = MODEL_PATH+'/'+CUSTOM_MODEL_NAME+'/pipeline.config'
 ```
 
-# 2. Create Label Map
+## 2. Create Label Map
 
 선택단어들을 level 1~4로 나누어서 모델훈련을 시킬것이기에, 각 레벨별 label map pbtxt파일 생성한다.
 
@@ -294,7 +294,7 @@ for i in range(1,5):
     make_labelmap(labels_all[i-1],i)
 ```
 
-# 3. Create TF records
+## 3. Create TF records
 
 라벨링된 img, xml파일들과 labelmap을 담은 .pbtxt파일의 정보를 binary형태로 담은 record 파일을 단어 레벨별로 생성한다.
 
@@ -305,7 +305,7 @@ for i in range(1,5):
 !python {SCRIPTS_PATH + '/generate_tfrecord.py'} -x {IMAGE_PATH + '/level_1/test'} -l {ANNOTATION_PATH + '/level_1/label_map.pbtxt'} -o {ANNOTATION_PATH + '/level_1/test.record'}
 ```
 
-# 4. Download TF Models Pretrained Models from Tensorflow Model Zoo
+## 4. Download TF Models Pretrained Models from Tensorflow Model Zoo
 
 Tensorflow/models에 object detection api를 사용하여 model training을 진행하기위해 필요한것들이 담겨있다.
 (PC에서 실행 하려면 3,4,5번 부터는 object detection api가 OS에 설치되어있어야한다.
@@ -335,7 +335,7 @@ wget.download('http://download.tensorflow.org/models/object_detection/tf2/202007
 !cd {PRETRAINED_MODEL_PATH} && tar -zxvf ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8.tar.gz
 ```
 
-# 5. Copy Model Config to Training Folder
+## 5. Copy Model Config to Training Folder
 
 #### model config setup
 
@@ -363,7 +363,7 @@ CUSTOM_MODEL_NAME = 'my_ssd_mobnet'
 !cp {PRETRAINED_MODEL_PATH+'/ssd_mobilenet_v2_fpnlite_320x320_coco17_tpu-8/pipeline.config'} {MODEL_PATH+'/'+CUSTOM_MODEL_NAME}
 ```
 
-# 6. Update Config For Transfer Learning
+## 6. Update Config For Transfer Learning
 
 #### pipeline config 파일내의 내용 설명:
 
@@ -442,7 +442,7 @@ with tf.io.gfile.GFile(CONFIG_PATH, "wb") as f:
     f.write(config_text)   
 ```
 
-# 7. Train the model
+## 7. Train the model
 
 python shell script를 다음과 같이 string으로 확보하여 실행한다.
 
@@ -457,7 +457,7 @@ script 설명:
 print("""!python {}/research/object_detection/model_main_tf2.py --model_dir={}/{} --pipeline_config_path={}/{}/pipeline.config --num_train_steps=5000 --alsologtostderr""".format(APIMODEL_PATH, MODEL_PATH,CUSTOM_MODEL_NAME,MODEL_PATH,CUSTOM_MODEL_NAME))
 ```
 
-# 8. Evaluate the model
+## 8. Evaluate the model
 
 AP(average precision), AR(average recall)값을 확인할 수 있다.
 
@@ -468,7 +468,7 @@ cocodataset의 detection metrics를 사용한다. 상세 정보:https://cocodata
 print("""!python {}/research/object_detection/model_main_tf2.py --model_dir={}/{} --pipeline_config_path={}/{}/pipeline.config --checkpoint_dir={}/{}""".format(APIMODEL_PATH, MODEL_PATH,CUSTOM_MODEL_NAME,MODEL_PATH,CUSTOM_MODEL_NAME, MODEL_PATH,CUSTOM_MODEL_NAME))
 ```
 
-# 9. Load Train Model From Checkpoint
+## 9. Load Train Model From Checkpoint
 
 checkpoint 파일의 내용을 기반으로 훈련시킨 모델을 build할 수 있다.
 
@@ -510,7 +510,7 @@ def detect_fn(image):
     return detections
 ```
 
-# 10. Detect in Real-Time
+## 10. Detect in Real-Time
 
 opencv를 통해 실시간 영상에서 프레임을 object detection model로 분석하여 영상 속 동작에 해당하는 수어 단어를 detect할 수 있다. detect되는 box에 model이 detect한 단어의 확률도 함께 출력된다. 
 
